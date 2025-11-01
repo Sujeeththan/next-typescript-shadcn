@@ -23,30 +23,24 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroupTextarea,
-} from "@/components/ui/input-group"
+
 
 const formSchema = z.object({
-  title: z
+  name: z
     .string()
-    .min(5, "Bug title must be at least 5 characters.")
-    .max(32, "Bug title must be at most 32 characters."),
-  description: z
-    .string()
-    .min(20, "Description must be at least 20 characters.")
-    .max(100, "Description must be at most 100 characters."),
+    .min(2, "name must be at least 2 characters."),
+  email:z
+     .email({message:"Email is required"})
+     .regex(/^(?!\.)(?!.*\.\.)([a-z0-9_'+\-\.]*)[a-z0-9_+-]@([a-z0-9][a-z0-9\-]*\.)+[a-z]{2,}$/i)  
+
 })
 
 export default function UserNewEditFormView() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      description: "",
+      name: "",
+      email: "",
     },
   })
 
@@ -69,27 +63,27 @@ export default function UserNewEditFormView() {
   return (
     <Card className="w-full sm:max-w-md">
       <CardHeader>
-        <CardTitle>Bug Report</CardTitle>
+        <CardTitle>User Register</CardTitle>
         <CardDescription>
-          Help us improve by reporting bugs you encounter.
+          Registation form for user
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup>
             <Controller
-              name="title"
+              name="name"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="form-rhf-demo-title">
-                    Bug Title
+                  <FieldLabel htmlFor="form-rhf-demo-name">
+                   Name
                   </FieldLabel>
                   <Input
                     {...field}
-                    id="form-rhf-demo-title"
+                    id="form-rhf-demo-name"
                     aria-invalid={fieldState.invalid}
-                    placeholder="Login button not working on mobile"
+                    placeholder="Enter your name"
                     autoComplete="off"
                   />
                   {fieldState.invalid && (
@@ -98,33 +92,22 @@ export default function UserNewEditFormView() {
                 </Field>
               )}
             />
-            <Controller
-              name="description"
+
+             <Controller
+              name="email"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="form-rhf-demo-description">
-                    Description
+                  <FieldLabel htmlFor="form-rhf-demo-email">
+                    Email
                   </FieldLabel>
-                  <InputGroup>
-                    <InputGroupTextarea
-                      {...field}
-                      id="form-rhf-demo-description"
-                      placeholder="I'm having an issue with the login button on mobile."
-                      rows={6}
-                      className="min-h-24 resize-none"
-                      aria-invalid={fieldState.invalid}
-                    />
-                    <InputGroupAddon align="block-end">
-                      <InputGroupText className="tabular-nums">
-                        {field.value.length}/100 characters
-                      </InputGroupText>
-                    </InputGroupAddon>
-                  </InputGroup>
-                  <FieldDescription>
-                    Include steps to reproduce, expected behavior, and what
-                    actually happened.
-                  </FieldDescription>
+                  <Input
+                    {...field}
+                    id="form-rhf-demo-email"
+                    aria-invalid={fieldState.invalid}
+                    placeholder="Enter your email address"
+                    autoComplete="off"
+                  />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}
