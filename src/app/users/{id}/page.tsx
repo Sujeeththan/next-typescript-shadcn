@@ -1,7 +1,10 @@
+import UserCreateView from "@/sections/user/view/user-create-view";
+import UserProfileView from "@/sections/user/view/user-profile-view";
+
 export default function UserProfilePage() {
   return (
     <div>
-      <h1>User Profile Page</h1>
+      <UserProfileView />
     </div>
   );
 }
