@@ -1,4 +1,3 @@
-import UserCreateView from "@/sections/user/view/user-create-view";
 import UserProfileView from "@/sections/user/view/user-profile-view";
 
 export default function UserProfilePage() {
